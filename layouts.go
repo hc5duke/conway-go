@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"math/rand"
 )
 
 func SeedBoard(board [][]bool) {
@@ -39,7 +39,6 @@ func SeedBoard(board [][]bool) {
 		index := 0
 		for _, num1 := range []int{2, 7, 9, 14} {
 			for _, num2 := range []int{4, 5, 6, 10, 11, 12} {
-				fmt.Println("---> ", cap(seeds), len(seeds), index, num1, num2)
 				seeds[index] = []int{num1, num2}
 				seeds[index+1] = []int{num2, num1}
 				index += 2
@@ -66,18 +65,19 @@ func SeedBoard(board [][]bool) {
 			[]int{4, 1},
 			[]int{4, 4},
 		}
+	case "rand":
+		rand.Seed(42)
+		seeds = make([][]int, 0)
+		for row := 0; row < Rows; row++ {
+			for col := 0; col < Cols; col++ {
+				if rand.Intn(10) > 7 {
+					board[row][col] = true
+				}
+			}
+		}
 
 	}
 	for _, seed := range seeds {
 		board[seed[0]][seed[1]] = true
 	}
 }
-
-/*
-    # Randomized
-  case 'rand'
-      seeds = []
-      for row in [0...rows]
-        for col in [0...cols]
-          seeds.push([row, col]) if Math.random() > 0.7
-*/
