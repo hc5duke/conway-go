@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 func SeedBoard(board [][]bool) {
 	var seeds [][]int
 	switch Seed {
@@ -30,12 +34,17 @@ func SeedBoard(board [][]bool) {
 			[]int{4, 3},
 			[]int{4, 4},
 		}
-	//case 'pulsar':
-	//seeds = [][]int{
-	//for num1 in [2,7,9,14]
-	//for num2 in [4,5,6,10,11,12]
-	//seeds.push([num1, num2], [num2, num1])
-
+	case "pulsar":
+		seeds = make([][]int, 48)
+		index := 0
+		for _, num1 := range []int{2, 7, 9, 14} {
+			for _, num2 := range []int{4, 5, 6, 10, 11, 12} {
+				fmt.Println("---> ", cap(seeds), len(seeds), index, num1, num2)
+				seeds[index] = []int{num1, num2}
+				seeds[index+1] = []int{num2, num1}
+				index += 2
+			}
+		}
 	// Spaceships
 	case "glider":
 		seeds = [][]int{
@@ -71,10 +80,4 @@ func SeedBoard(board [][]bool) {
       for row in [0...rows]
         for col in [0...cols]
           seeds.push([row, col]) if Math.random() > 0.7
-
-  for rc in seeds
-    [row, col] = rc
-    board[row][col] = true
-
-  return board
 */

@@ -9,7 +9,7 @@ import (
 var (
 	Rows = 20
 	Cols = 20
-	Seed = "glider"
+	Seed = "pulsar"
 )
 
 // boards
