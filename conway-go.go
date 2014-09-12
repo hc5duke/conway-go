@@ -1,46 +1,35 @@
 package main
 
-import "fmt"
-
-var (
-	rows         = 20
-	cols         = 20
-	currentBoard = MakeBoard(rows, cols)
-	nextBoard    = MakeBoard(rows, cols)
+import (
+	"fmt"
+	"time"
 )
 
-func MakeBoard(rows, cols int) [][]bool {
-	_board := make([][]bool, rows)
-	for i := range _board {
-		_board[i] = make([]bool, cols) /* again the type? */
-		for j := range _board[i] {
-			_board[i][j] = false
-		}
-	}
-	return _board
-}
+// Constants
+var (
+	Rows = 20
+	Cols = 20
+	Seed = "glider"
+)
 
-func PrintBoard(board [][]bool) {
-	//console.log "\x1B" + "[#{ROWS + 3}A"
-	var borderHoriz = "═"
-	for i := 0; i < cols; i++ {
-		borderHoriz += "══"
-	}
-	fmt.Println("╔" + borderHoriz + "╗")
-	for i := range board {
-		fmt.Print("║ ")
-		for j := range board[i] {
-			if board[i][j] {
-				fmt.Print("█ ")
-			} else {
-				fmt.Print("  ")
-			}
-		}
-		fmt.Println("║")
-	}
-	fmt.Println("╚" + borderHoriz + "╝")
-}
+// boards
+var (
+	currentBoard = MakeBoard()
+	nextBoard    = MakeBoard()
+)
 
 func main() {
-	PrintBoard(currentBoard)
+	SeedBoard(currentBoard)
+	// Clear board space
+	for i := 0; i < Rows; i++ {
+		fmt.Println("\n")
+	}
+
+	for i := 0; ; i++ {
+		PrintBoard(currentBoard)
+		Step(currentBoard, nextBoard)
+		currentBoard = nextBoard
+		nextBoard = MakeBoard()
+		time.Sleep(100 * time.Millisecond)
+	}
 }
